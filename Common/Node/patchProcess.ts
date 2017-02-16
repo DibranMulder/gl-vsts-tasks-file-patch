@@ -3,6 +3,7 @@ import patch = require('./patch');
 import matcher = require('./shared/multimatch');
 import tl = require('vsts-task-lib/task');
 import fs = require('fs');
+import shelljs = require('shelljs');
 
 var slickPatchParser = new patch.SlickPatchParser();
 var varRegex = /\$\((.*?)\)/g;
@@ -33,7 +34,8 @@ export function apply(patcher: patch.IPatcher, workingDirectory: string, filters
             console.log('>>>> : patched file');
             console.log(fileContent.content);
         }
-
+        // Make the file writable, because TFVC checks out files in readonly mode.
+        shelljs.chmod(666, file);
         fs.writeFileSync(file, bom.restoreBom(fileContent), { encoding: 'utf8' });
     }
     if (!files.length){

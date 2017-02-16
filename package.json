@@ -36,6 +36,7 @@
   "devDependencies": {
     "async": "2.0.1",
     "karma": "^1.1.2",
+    "shelljs": "^0.5.3",
     "npm-run-all": "2.3.0"
   }
 }
